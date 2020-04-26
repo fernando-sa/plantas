@@ -12,7 +12,19 @@ class PlantCare extends Model
 
     public function plants()
     {
-        $this->hasMany('App\Plants');
+        return $this->hasMany('App\Plant', 'plantCareId', 'id');
     }
 
+    public function responsibleUser()
+    {
+        return $this->belongsTo('App\User', 'responsibleUserId', 'id');
+    }
+
+    public function readableStatus()
+    {
+        if(! $this->isActive) return "Pedido inativo";
+        if($this->isTaken) return "<span style='color: green'>Pedido aceito por <a href=" . route('showProfile', ['id' => $this->responsibleUser->id]) . "> {$this->responsibleUser->name} </a></span>";
+        if(strtotime('today') > strtotime($this->beginDate)) return "<span style='color: red'>Pedido vencido</span>";
+        return "Pedido em aberto";
+    }
 }

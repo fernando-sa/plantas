@@ -32,4 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fazer-pedido', 'PlantCareController@index')->name('newPlantCare');
     Route::post('/fazer-pedido', 'PlantCareController@store')->name('storePlantCare');
     
+    Route::get('/meus-pedidos', 'PlantCareController@userRequests')->name('myRequests');
+
+
 });

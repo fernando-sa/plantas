@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Interfaces\PlantCaresInterface;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\PlantCare;
+use Illuminate\Support\Facades\Auth;
+
 use App\Repositories\Interfaces\PlantsInterface;
+use App\Repositories\Interfaces\PlantCaresInterface;
+
+use App\Http\Requests\PlantCare;
 
 class PlantCareController extends Controller
 {
@@ -18,13 +21,20 @@ class PlantCareController extends Controller
     {
         DB::beginTransaction();
         try {
-            $plantCareRepository->create($request, $plantsRepository);
+            $plantCareRepository->create($request->all(), $plantsRepository);
             DB::commit();
-            return redirect()->route('home')->withErrors('Just testing');
+            // TODO: redirect to possible takers list -fernando
+            return redirect()->route('home')->withSuccess('Pedido de cuidado criado');
         } catch (\Throwable $th) {
             throw $th;
             DB::rollback();
-            return redirect()->route('home')->withErrors('An error just occurred!');
+            return redirect()->route('home')->withErrors(config('errors.defaultError'));
         }
+    }
+
+    public function userRequests()
+    {
+        $plantCares = Auth::user()->plantCares->paginate(10);
+        return view('plantCare.userRequests', ['plantCares' => $plantCares]);
     }
 }

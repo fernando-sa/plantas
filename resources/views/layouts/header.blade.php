@@ -30,6 +30,9 @@
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ route('newPlantCare')  }}">Preciso que cuidem das minhas plantinhas!</a>
                         </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ route('myRequests')  }}">Meus pedidos</a>
+                        </li>                        
                     @endauth
                 </ul>
             </div>
@@ -53,6 +56,23 @@
             </ul>
         </div>
     </div>
+    <div style="top: 0; position:fixed;width:100%;z-index: 999">
+        <div class="col-12 py-2 px-4 @if(! Session::has('success')) d-none @endif" style="background-color: #7F7" id="sessionSuccessDisplay">
+            @if (session()->has('success'))
+                <ul>
+                    @foreach ((array)session()->get('success') as $success)
+                    <li>{{ $success }}</li>
+                    @endforeach
+                </ul>
+            {{ session()->forget('success') }}
+            @endif            
+        </div>
+        <div class="col-12 py-2 px-4 " style="background-color: #7F7; display: none" id="alertsSuccessDisplay">
+            <ul id="alertsSuccessList">
+
+            </ul>
+        </div>
+    </div>    
 </div>
 
 <script>

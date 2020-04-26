@@ -5,6 +5,6 @@ use App\Http\Requests\PlantCare as PlantCareRequest;
 
 interface PlantCaresInterface{
     
-    public function create(PlantCareRequest $args, PlantsInterface $plantsRepository);
+    public function create(array $args, PlantsInterface $plantsRepository);
     
 }

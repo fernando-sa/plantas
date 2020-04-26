@@ -1,14 +1,14 @@
 <?php
 namespace App\Repositories\Eloquent;
 
-use App\Plants;
+use App\Plant;
 use App\Repositories\Interfaces\PlantsInterface;
 
 class PlantsRepository implements PlantsInterface{
     
 	private $model;
 
-	public function __construct(Plants $model)
+	public function __construct(Plant $model)
 	{
 		$this->model = $model;
 	}

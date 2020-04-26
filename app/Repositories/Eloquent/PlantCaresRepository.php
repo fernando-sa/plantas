@@ -17,11 +17,11 @@ class PlantCaresRepository implements PlantCaresInterface{
 		$this->model = $model;
 	}
 
-    public function create(PlantCareRequest $args, PlantsInterface $plantsRepository)
+    public function create(array $args, PlantsInterface $plantsRepository)
     {
 		$plantCare = $this->model->create([
-			'beginDate' => $args->beginDate,
-			'endDate' => $args->endDate,
+			'beginDate' => $args['beginDate'],
+			'endDate' => $args['endDate'],
 			'isTaken' => false,
 			'ownerId' => Auth::id(),
 			'responsibleUserId' => null,
