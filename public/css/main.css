@@ -1,0 +1,9 @@
+.newPlantCareSectionH1{
+    font-size: 2em;
+    font-weight: 600;
+}
+
+.newPlantsList{
+    background-color: lightgray;
+    border-radius: 0.5em;
+}
