@@ -27,4 +27,15 @@ class PlantCare extends Model
         if(strtotime('today') > strtotime($this->beginDate)) return "<span style='color: red'>Pedido vencido</span>";
         return "Pedido em aberto";
     }
+    
+    public function maxPlantSize()
+    {
+        $maxSize = 'small';
+        foreach($this->plants as $plant){
+            if($plant->size == 'big') return 'big';
+            
+            if($plant->size == 'medium') $maxSize = 'medium';
+        }
+        return $maxSize;
+    }
 }

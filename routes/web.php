@@ -34,5 +34,7 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/meus-pedidos', 'PlantCareController@userRequests')->name('myRequests');
 
+    Route::get('/achar-cuidador/{plantCareId}', 'PlantCareController@showPossibleCarers')->name('showPossibleCarers');
+
 
 });

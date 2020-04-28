@@ -37,5 +37,10 @@ class PlantCaresRepository implements PlantCaresInterface{
 		}
 
         return $plantCare;
-    }
+	}
+	
+	public function find(int $id)
+	{
+		return $this->model->find($id);
+	}
 }

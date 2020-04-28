@@ -7,8 +7,11 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Repositories\Interfaces\PlantsInterface;
 use App\Repositories\Interfaces\PlantCaresInterface;
+use App\Repositories\Interfaces\UsersInterface;
 
 use App\Http\Requests\PlantCare;
+use App\CarerMatcher;
+
 
 class PlantCareController extends Controller
 {
@@ -21,10 +24,9 @@ class PlantCareController extends Controller
     {
         DB::beginTransaction();
         try {
-            $plantCareRepository->create($request->all(), $plantsRepository);
+            $plantCare = $plantCareRepository->create($request->all(), $plantsRepository);
             DB::commit();
-            // TODO: redirect to possible takers list -fernando
-            return redirect()->route('home')->withSuccess('Pedido de cuidado criado');
+            return redirect()->route('showPossibleCarers', ['plantCareId' => $plantCare->id])->withSuccess('Pedido de cuidado criado! Peça a um dos cuidadores disponíveis pra te ajudar.');
         } catch (\Throwable $th) {
             throw $th;
             DB::rollback();
@@ -36,5 +38,12 @@ class PlantCareController extends Controller
     {
         $plantCares = Auth::user()->plantCares->paginate(10);
         return view('plantCare.userRequests', ['plantCares' => $plantCares]);
+    }
+
+    public function showPossibleCarers(int $plantCareId, PlantCaresInterface $plantCareRepository, UsersInterface $userRepository)
+    {
+        $carerMacher = new CarerMatcher();
+        $carers = $carerMacher->getCarersForPlants($plantCareId, $plantCareRepository, $userRepository)->paginate(10);
+        return view('plantCare.carersList', ['carers' => $carers]);
     }
 }

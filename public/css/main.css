@@ -11,3 +11,8 @@
 .clickable{
     cursor: pointer;
 }
+
+.emptyListMessage{
+    font-size: 1.3em;
+    font-weight: 600;
+}

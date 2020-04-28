@@ -13,15 +13,20 @@ class RepositoriesProvider extends ServiceProvider
      */
     public function register()
     {
-        // We can't concatenate string with constant, so we put it on a variable.
         $this->app->bind(
             'App\Repositories\Interfaces\PlantCaresInterface',
             'App\Repositories\Eloquent\PlantCaresRepository'
         );
+
         $this->app->bind(
             'App\Repositories\Interfaces\PlantsInterface',
             'App\Repositories\Eloquent\PlantsRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Interfaces\UsersInterface',
+            'App\Repositories\Eloquent\UsersRepository'
+        );        
     }
 
     /**
